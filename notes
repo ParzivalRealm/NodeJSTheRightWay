@@ -1,0 +1,90 @@
+2024-10-01
+
+**Done**
+1. Learned how to test the LDJClient class without mocha, using net-watcher-ldj-client.js as the client that listens for message.
+
+2. Learned how to use the net module from NodeJS to create a server on test-json-service.js, learned that teh connection parameter is the object that is used for the arrows function, the connection object is the result of CreateServer function and it contains server methods.
+
+3. Learned that the write method sends a 'data' event, I learned this using the nodeJS doc, so with that knowledge I know the next steps to be able to test the LDJClient to fulfill the request on Node.js 8 the right way book.
+
+4. I modified the LDJClient class removing the JSON.parse function and the boundary and look for "/n" character to know when a JSON is closed and added emit messages so I can catch them on the net-watcher-ldj-client.js that requests a connection to the test-json-service.js that serves a complete JSON but without the "/n"
+
+5. This was the excercise reviewed: Write a case where the stream object sends a data event containing JSON
+but no newline, followed by a close event. A real Stream instance will emit
+a close event when going offline—update LDJClient to listen for close and
+process the remainder of the buffer.
+
+
+** ToDo **
+
+1. Change the emit event from message to close
+2. send JSON.Parse(buffer) instead the buffer variable
+
+2024-10-03
+
+Didn't do anything yesterday cause i got swamped at work and idk why but I played at night instead of coming and code, I really was tired, however today was the same but still showed to coding and feel great, ill go to sleep instead of playing now.
+
+**Done**
+
+1. Done the ToDo list of 2024-10-01, I could remember what and why stuff I needed to do, then run the test and it worked perfectly.
+
+Total Work Time: ~30mins
+
+** ToDo **
+
+1. Read next chapter Connecting Robust Microservices
+
+2024-09-06 - Worked Time, 2hrs
+
+**Done**
+
+1. started reading microservices chapter
+2. learned how to do the subscriber and publisher pattern, a publisher will send data to any subscriber
+3. learned how to use zeromq library the updated way cause the example of the book was outdated and didnt worked like that anymore.
+
+**ToDo**
+1. Continue with the chapter and excercises. 
+
+2024-10-06 - Worked Time, ~1hr
+
+**Done**
+1. Continued the microservices chapter and learn that the publisher doesnt need to be binded to a socket, and that when you need to design a networked application, you'll typically have teh more permanent parts of your architecture bind and have the transient parts connected to them. 
+2. Learn about a zmq guide that is on the docs, I need to read that later to dive deeper into advanced network cases.
+3. Created a 0MQ rep socket, didnt finished
+
+**ToDo**
+1. Finish the rep socket, test if bind works with promise or if now with the new version of 0mq you dont need it, apparently you dont need it, they dont use it on the docs, but i cant understand why.
+
+2024-10-07 - Worked Time, 30 min
+
+**Done**
+1.Continue building the reply socket from scratch, idk why but i understood it easier today how to build it with the new docs and doing what the examples required, also i could test my assumptions and make my own validations, I learned that the function only accepts 1 argument, so the second argument err that I was having doubts yesterday will not work because of that. I have only the doubt with the await instruction, does it pause the exexecution on the line of code until that line is resolved? I think so... Also I wonder if there is a way of seeing the interface like the argument of a function you are using for example the bind, but other than the docs, like some function built inside JS cause sometimes it's hard to understand the interfaces from docs.
+This day I only did a little bit but proud of it cause i am so tired but still managed to study a little bit.
+
+**ToDo**
+1. Continue the chapter to build the requester.
+
+2024-10-12 - Worked Time, 50 min (2 pomodoros)
+
+**Done**
+1. So Ive been away for work, I went to the usa office and couldnt practice programming there, just coming back and test the requester, it needed a couple of fixes, today I learn that if you are going to use the async and await pattern, you should put all your events and code at the top and then at the very end you will put the thing that will be kept in await. you can see the example on the nodeJsTheRightWay/microservices/zmq-filter-rep.js
+
+**ToDo**
+1. Now actually build the requester.
+
+2024-10-14 - Worked Time, 50 min
+
+**Done**
+1. Yesterday was sunday and we were all day on Canoas, I was having fun with my wife, baby and the family, so I leave early and arrived late, that is why i missed a day.
+2. The achievement of today was finalizing the requester, test it and it is working, i also learned that how async and await work, basically async returns a promise and let you use the await keyword, it is a sugarcoat for using promises, async functions will stop their execution when an await is found, but that function will not stop the node.js loop. in its place the loop is released to do other requests and when the async function is done it will queue the continuation of the loop of the event.
+3. As usual i felt proud of today cause i was going to play LoL as i was very tired, but wife didnt allowed it so yeah it was a good move.
+
+2024-10-16 - worked time 2 hr
+
+1. yesterday i didnt felt good.
+2. today i learned the dealer and router pattern of zeromq, it was a hard topic, but claude told me that router is the backend server of the request sockets and the dealer acts as the back end for the replies workers
+
+2024-10-21 - worked time 3 hrs
+
+1. idk what happened this week, but i restarted my learning
+2. today i learned about router and dealer pattern and implemented the pattern using the new library api however it was giving me a type error, so i asked claude cause i was clueless and it told me the reason, so it seems like i need to threat promises paralell and not sequentially, i will try to do that on my own tomorrow.
