@@ -88,3 +88,33 @@ This day I only did a little bit but proud of it cause i am so tired but still m
 
 1. idk what happened this week, but i restarted my learning
 2. today i learned about router and dealer pattern and implemented the pattern using the new library api however it was giving me a type error, so i asked claude cause i was clueless and it told me the reason, so it seems like i need to threat promises paralell and not sequentially, i will try to do that on my own tomorrow.
+
+[2024-11-06] - Worked time [4] hrs - Pages [91-92]
+
+Pomodoro Cycles:
+1. [What you covered] - Started biDirectional Messaging projct that is on nodeJsTheRightWay, need to create a cluster program that will spin 30 distributed jobs between workers, it should be less than 100 lines, this pomodoro i created the push and pull sockets and bind them to ipc addresses, to do that i needed to read zmq api reference cause i didnt knew how the ipc addresses were handled, then i needed to read node.js api docs about cluster module and its methods cause ive only used them with the excercises from the book but i didnt really know how to make that code without reading the book, i found that the method isMaster that is on hte book is deprecated so i used isPrimary
+ i also created the loop to push workers when they emit the online event so i can habe the count of workers ready
+2. [What you covered] - i was thinking on how to make the loop to remove workers of the readyworkers array, i saw array methods of js, tried to do a foreach that had a condition that when it matches the worker object when the disconnect event happens it calls the shift method on the array but i didnt liked that solution and i remembered that claude gave me a similar code for it, so after i couldnt get more ideas i checked that code, and it had the splice method and indexOf so i read the cluster docs to know moremethods and saw that i can see the workers for a primary cluster so i used that and now that im writing this i think that will not work but pomodoro is over and i want to take water
+3. [What you covered] - i failed to keep track of the pomodoros, but i did the ready workers count good, it was going to work the way i was saying cause that listener is different than the msg listeners, i made the worker process that creates a pull and push socket and connects it to the master pull and push, i also did a promise that will solve after 3 workers are ready and i did the loop to send 30 messages as a json, i need to rest as im fried but i will continue tomorrow with the masterPuller listener for the ready messages, i also send a ready message from the workers push socket and create the listener for job message on the pull workers that send a result message on the push socket ah damn i am understanding now and my approach will not work, the listener must be on the pull socket not to the cluster to know when the workers are ready, ill change that tomorrow.
+
+Key Learnings:
+- [Main concepts] - cluster and its events, methods, how push and pull works, more about listeners and where they should be applied, how to make a promise pattern tied to a listener and a condition, array methods, how ipc addresses are named, and idk it just really clicked something about sending messages, the topic from the book is bidirectional messaging.
+- [Technical discoveries] - i really dont know what could be here
+
+Blockers/Time Sinks:
+- [What slowed you down] arch setup and family time
+- [How you resolved it] i just did a quick arch setup, and spoke with my wife that today i was going to sleep late cause i needed to make advances on this.
+
+Code Updates Needed:
+- [Outdated examples] - isMaster now is deprecated and i changed it for isPrimary
+- [Your modern solutions]
+
+  [2024-11-07] - worked time [] - Pages []
+  Pomodoro Cycles:
+  1. resumed pending changes, changed the cluster listeners to the corresponding socket listeners, researched with claude how i can send parameters to a callback function and discover that you only can use whatever returned from the caller function, in my case was on as i wanted to make like .on'ready' but then i thought of just adding the type key on the json and on my logic just reference to msg.type and that's it.
+  2. changed the logic of my promise function cause it was still listening to clusters, i also created a function called messageHandler that receives a msg based on a switch statement it adds or substracts from ready counter and also sends msgs from workers if needed. I learned about closure pattern and i was already doing it but i didnt remember that i was inside run scope and i could use all the workers no matter the logic path i am, i started checking the logic to see if it complies with the book, and paid attention to when add await cause i am not 100% sure when to add it but im just thinking and adding. I really liked the logic of creating a messageHandler function, that way i can call it many times and if i want to make a change i just go to that function, i grab it from the cluster nodejs api. Im also adding try and catch statements cause im not use to make the code like that but i think its a good practice for debugging later. my friend interrupted me and asked me to play LoL, he doesnt know my issues and ive tried to explain on other times but i dont think he understand it, he is older and already gave up on his career, ive used my daughter as an excuse and that my wife didnt wanted me to be playing so yeah, it sux cause i thought of it as my friend but i only interact with him while playing it was small interruption, i continued to adding the try and catch
+  3. finished adding tries and catches, adding a result case to the messageHandler, checked how to get the worked id so i can see if the load is being balanced and added a catch to the run execution function, i need to learn more about error handling, im just going with my gut. lmao i fucked up cause i set the pull sockets to listening as .on but they dont have that function, i need to set them as for await, i'd love to do that but my wife wants me to go to bed to be with her, its 8:30 o clock, for now i'll go as i saw her needy.
+
+  Key Learnings:
+  - [Main concepts] - how to set listeners to the proper objects, practiced code reusability, made a switch case, scope on js, callback functions on js
+  - [Technical discoveries] - when executing a callback you only can use as parameters the return of the function that is doing the callback. you can use catch by itself, no need to use try, i applied it as run().catch pattern, for listeners or receiver of messages on zmq objects you need to use the for await pattern, not the .on('message')
